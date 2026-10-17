@@ -1,0 +1,22 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Inbound contact requests from the marketing site. No auth anywhere on
+// this project: it is a public marketing site plus a client-side toolkit.
+model ContactRequest {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  company   String   @default("")
+  service   String
+  message   String
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+}
